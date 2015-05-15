@@ -1,0 +1,38 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity"
+    android:weightSum="3"
+    android:background="#ff0">
+
+    <Button
+        android:id="@+id/btnYeniKaynak"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        tools:context=".MainActivity"
+        android:layout_weight="1"
+        android:text="Yeni Kaynak Bilgi Girişi"
+        android:background="@drawable/border" />
+
+    <Button
+        android:id="@+id/btnKaynakGuncelleme"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        tools:context=".MainActivity"
+        android:layout_weight="1"
+        android:text="Kaynak Güncelleme"
+        android:background="@drawable/border" />
+
+    <Button
+        android:id="@+id/btnGeri"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        tools:context=".MainActivity"
+        android:layout_weight="1"
+        android:text="Geri"
+        android:background="@drawable/border" />
+
+
+</LinearLayout>
