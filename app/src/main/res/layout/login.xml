@@ -1,0 +1,141 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/red"
+    android:orientation="vertical"
+    android:weightSum="12">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:background="@drawable/login_topvv"></LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/chooseRel"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@+id/topImage"
+        android:layout_weight="1"
+        android:background="#ff51b4af"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/seciniztv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/secim_yapiniz"
+            android:textColor="#ffffff"
+            android:textSize="25dp" />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/seciniztv"
+            android:src="@drawable/login_back_icon" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/userNameRelative"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@+id/chooseRel"
+        android:layout_weight="1"
+        android:background="#ffffff"
+        android:gravity="left|center">
+
+        <ImageView
+            android:id="@+id/userNameImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/login_username" />
+
+        <EditText
+            android:id="@+id/textUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/userNameImage"
+            android:background="#ffffff"
+            android:hint="Kullanıcı Adı"
+            android:inputType="text"
+            android:padding="10dp"
+            android:text=""
+            android:textColor="#000000"
+            android:textColorHint="@android:color/darker_gray"
+            android:textSize="20dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/userPasswordRelative"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@+id/userNameRelative"
+        android:layout_weight="1"
+        android:background="#ffffff"
+        android:gravity="left|center">
+
+        <ImageView
+            android:id="@+id/userPasswordImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/login_pass" />
+
+        <EditText
+            android:id="@+id/textUserPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/userPasswordImage"
+            android:background="#ffffff"
+            android:hint="@string/password_hint"
+            android:inputType="textPassword"
+            android:padding="10dp"
+            android:text=""
+            android:textColor="#000000"
+            android:textColorHint="@android:color/darker_gray"
+            android:textSize="20dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/loginRel"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@+id/userPasswordRelative"
+        android:layout_weight="1"
+        android:background="#ffca222c"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Giriş Yapın"
+            android:textColor="#ffffff"
+            android:textSize="25dp" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/login_bottomimage" />
+
+</LinearLayout>
