@@ -19,7 +19,7 @@ public class Retrofit {
         synchronized (lock) {
             if (mAdapter == null) {
                 mAdapter = new RestAdapter.Builder()
-                        .setEndpoint( EndPoint.BASE_URL)
+                        .setEndpoint(EndPoint.BASE_URL)
                         .build();
             }
             return mAdapter;
