@@ -1,5 +1,6 @@
 package com.timboict.saglikbakanligi;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -13,6 +14,8 @@ import android.widget.TextView;
 
 import com.nispok.snackbar.Snackbar;
 import com.nispok.snackbar.enums.SnackbarType;
+import com.timboict.saglikbakanligi.cache.cache.SBData;
+import com.timboict.saglikbakanligi.enums.GirisTipi;
 import com.timboict.saglikbakanligi.manager.LoginManager;
 import com.timboict.saglikbakanligi.model.User;
 
@@ -26,7 +29,7 @@ import retrofit.client.Response;
 /**
  * Created by mustafaguven on 17.05.2015.
  */
-public class LoginActivity extends ActionBarActivity {
+public class LoginActivity extends BaseActivity {
 
     @InjectView(R.id.chooseRel)
     LinearLayout lnLoginType;
@@ -43,7 +46,8 @@ public class LoginActivity extends ActionBarActivity {
     @InjectView(R.id.seciniztv)
     TextView lblSeciniz;
 
-    LoginManager loginManager = null;
+    private LoginManager loginManager = null;
+    private GirisTipi mGirisTipi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,43 +56,45 @@ public class LoginActivity extends ActionBarActivity {
         ButterKnife.inject(this);
         loginManager = new LoginManager();
         registerForContextMenu(lnLoginType);
+        if(SBData.getUser()!=null){
+            lblSeciniz.setText(getResources().getString(SBData.getUser().getGirisTipi() == GirisTipi.ICME_SUYU_ISLEMLERI ?
+                    R.string.icme_suyu_islemleri : R.string.ambalajli_su_islemleri));
+            onClicked_Login();
+        }
     }
 
     @OnClick(R.id.loginRel)
-    public void loginClicked(View view) {
+    public void onClicked_Login() {
         if (validated()) {
-            loginManager.getApi().login(txtUsername.getText().toString(), txtPassword.getText().toString(), new Callback<User>() {
+            showProgress();
+            loginManager.getApi(mGirisTipi).login(txtUsername.getText().toString(), txtPassword.getText().toString(), new Callback<User>() {
                 @Override
                 public void success(User user, Response response) {
-                    Snackbar.with(getApplicationContext())
-                            .type(SnackbarType.MULTI_LINE)
-                            .color(Color.GREEN)
-                            .text(user.getUsername() + " " + user.getAuthToken())
-                            .show(LoginActivity.this);
+                    hideProgress();
+                    user.setGirisTipi(mGirisTipi);
+                    SBData.setUser(user);
+                    startActivity(new Intent(LoginActivity.this, IKBSActivity.class));
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
-                    Snackbar.with(getApplicationContext())
-                            .type(SnackbarType.MULTI_LINE)
-                            .color(Color.RED)
-                            .text("Hata: " + error)
-                            .show(LoginActivity.this);
+                    hideProgress();
+                    showSnackBar(error.getMessage());
                 }
             });
         }
     }
 
     @OnClick(R.id.chooseRel)
-    public void lnLoginType_Clicked(View view) {
+    public void onClicked_LoginType(View view) {
         openContextMenu(view);
     }
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add("İçme Suyu İşlemleri");
-        menu.add("Ambalajlı Su İşlemleri");
+        menu.add(getResources().getString(R.string.icme_suyu_islemleri));
+        menu.add(getResources().getString(R.string.ambalajli_su_islemleri));
     }
 
     @Override
@@ -104,13 +110,15 @@ public class LoginActivity extends ActionBarActivity {
         return super.onContextItemSelected(item);
     }
 
-
     private boolean validated() {
         String error = "";
         if (TextUtils.isEmpty(lblSeciniz.getText().toString())
                 || lblSeciniz.getText().toString().contentEquals(getResources().getString(R.string.secim_yapiniz))) {
             error += "Giriş tipi seçilmedi. ";
+        } else {
+            mGirisTipi = lblSeciniz.getText().toString().contentEquals(getResources().getString(R.string.icme_suyu_islemleri)) ? GirisTipi.ICME_SUYU_ISLEMLERI : GirisTipi.AMBALAJLI_SU_ISLEMLERI;
         }
+
         if (TextUtils.isEmpty(txtUsername.getText().toString())) {
             error += "Kullanıcı adı belirtilmedi. ";
         }

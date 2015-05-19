@@ -5,4 +5,7 @@
     <string name="action_settings">Settings</string>
     <string name="secim_yapiniz">Seçim Yapınız</string>
     <string name="password_hint">Şifre</string>
+    <string name="icme_suyu_islemleri">İçme Suyu İşlemleri</string>
+    <string name="ambalajli_su_islemleri">Ambalajlı Su İşlemleri</string>
+    <string name="aritma_form_main_title">ARITMA TESİSİ BİLGİ GİRİŞİ</string>
 </resources>

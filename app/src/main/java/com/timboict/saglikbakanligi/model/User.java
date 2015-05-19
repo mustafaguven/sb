@@ -1,5 +1,7 @@
 package com.timboict.saglikbakanligi.model;
 
+import com.timboict.saglikbakanligi.enums.GirisTipi;
+
 /**
  * Created by mustafaguven on 17.05.2015.
  */
@@ -56,9 +58,18 @@ public class User {
         this.rol = rol;
     }
 
+    public GirisTipi getGirisTipi() {
+        return girisTipi;
+    }
+
+    public void setGirisTipi(GirisTipi girisTipi) {
+        this.girisTipi = girisTipi;
+    }
+
     private String auth_token;
     private String username;
     private int il;
     private int ilce;
     private String rol;
+    private GirisTipi girisTipi;
 }

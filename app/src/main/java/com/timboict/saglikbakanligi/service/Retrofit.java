@@ -1,5 +1,6 @@
 package com.timboict.saglikbakanligi.service;
 
+import com.timboict.saglikbakanligi.enums.GirisTipi;
 import com.timboict.saglikbakanligi.service.api.EndPoint;
 
 import retrofit.RestAdapter;
@@ -15,14 +16,20 @@ public class Retrofit {
     private Retrofit() {
     }
 
-    public static RestAdapter get() {
+    public static RestAdapter get(GirisTipi girisTipi) {
         synchronized (lock) {
             if (mAdapter == null) {
                 mAdapter = new RestAdapter.Builder()
-                        .setEndpoint(EndPoint.BASE_URL)
-                        .build();
+                        .setEndpoint(String.format(EndPoint.BASE_URL, girisTipi==GirisTipi.ICME_SUYU_ISLEMLERI ? "isbs" : "asbs"))
+                                .build();
             }
             return mAdapter;
+        }
+    }
+
+    public static void clear(){
+        synchronized (lock){
+            mAdapter = null;
         }
     }
 }

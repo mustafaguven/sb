@@ -1,5 +1,6 @@
 package com.timboict.saglikbakanligi.manager;
 
+import com.timboict.saglikbakanligi.enums.GirisTipi;
 import com.timboict.saglikbakanligi.service.Retrofit;
 import com.timboict.saglikbakanligi.service.api.LoginAPI;
 
@@ -8,8 +9,8 @@ import com.timboict.saglikbakanligi.service.api.LoginAPI;
  */
 public class LoginManager {
 
-    public LoginAPI getApi(){
-        return Retrofit.get().create(LoginAPI.class);
+    public LoginAPI getApi(GirisTipi girisTipi){
+        return Retrofit.get(girisTipi).create(LoginAPI.class);
     }
 
 
