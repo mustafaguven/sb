@@ -10,6 +10,7 @@ import com.timboict.saglikbakanligi.service.api.LoginAPI;
 public class LoginManager {
 
     public LoginAPI getApi(GirisTipi girisTipi){
+        Retrofit.clear();
         return Retrofit.get(girisTipi).create(LoginAPI.class);
     }
 

@@ -37,7 +37,7 @@ public class MemoryCache<T> implements Cache<T> {
                     getSuccessor().put(key, t);
                 }
             } else {
-                memoryCache.remove(key);
+                remove(key);
             }
         }
     }
