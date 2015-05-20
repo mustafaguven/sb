@@ -54,7 +54,7 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
         ButterKnife.inject(this);
-        loginManager = new LoginManager();
+        loginManager = new LoginManager(this);
         registerForContextMenu(lnLoginType);
         if(SBData.getUser()!=null){
             lblSeciniz.setText(getResources().getString(SBData.getUser().getGirisTipi() == GirisTipi.ICME_SUYU_ISLEMLERI ?
@@ -67,19 +67,17 @@ public class LoginActivity extends BaseActivity {
     public void onClicked_Login() {
         if (validated()) {
             showProgress();
-            loginManager.getApi(mGirisTipi).login(txtUsername.getText().toString(), txtPassword.getText().toString(), new Callback<User>() {
+            loginManager.login(mGirisTipi, txtUsername.getText().toString(), txtPassword.getText().toString(), new ResponseListener<User>() {
                 @Override
-                public void success(User user, Response response) {
-                    hideProgress();
+                public void onSuccess(User user) {
                     user.setGirisTipi(mGirisTipi);
                     SBData.setUser(user);
                     startActivity(new Intent(LoginActivity.this, IKBSActivity.class));
                 }
 
                 @Override
-                public void failure(RetrofitError error) {
-                    hideProgress();
-                    showSnackBar(error.getMessage());
+                public void onFailure(Exception e) {
+
                 }
             });
         }

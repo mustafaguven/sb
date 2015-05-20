@@ -41,11 +41,11 @@ public class BaseActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
     }
 
-    protected void showSnackBar(String message){
+    public void showSnackBar(String message){
         showSnackBar(message, true);
     }
 
-    protected void showSnackBar(String message, boolean isError){
+    public void showSnackBar(String message, boolean isError){
         Snackbar.with(this)
                 .type(SnackbarType.MULTI_LINE)
                 .color(isError ? Color.RED : Color.GREEN)
