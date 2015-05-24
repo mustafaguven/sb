@@ -7,4 +7,5 @@ public class EndPoint {
     public static final String BASE_URL = "http://212.175.169.58:8080/CBS-API/%s";
     public static final String LOGIN_URL = "/auth/login";
     public static final String LIST_URL = "/{name}/list";
+    public static final String LIST_DETAIL = "/{name}/{id}";
 }

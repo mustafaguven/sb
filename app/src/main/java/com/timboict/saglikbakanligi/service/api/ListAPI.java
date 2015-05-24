@@ -21,4 +21,6 @@ public interface ListAPI<T> {
     @GET(EndPoint.LIST_URL)
     void getAritmaList(@Path("name") String name,
                Callback<List<ISBSAritmaModel>> response);
+
+
 }

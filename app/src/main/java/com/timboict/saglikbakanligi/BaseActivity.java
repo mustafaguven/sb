@@ -2,6 +2,9 @@ package com.timboict.saglikbakanligi;
 
 import android.app.ProgressDialog;
 import android.graphics.Color;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -12,6 +15,7 @@ import android.widget.TextView;
 import com.nispok.snackbar.Snackbar;
 import com.nispok.snackbar.enums.SnackbarType;
 import com.timboict.saglikbakanligi.component.FormEditText;
+import com.timboict.saglikbakanligi.component.FormPhotoAlbum;
 import com.timboict.saglikbakanligi.component.FormSpinner;
 
 import java.util.ArrayList;
@@ -32,6 +36,28 @@ public class BaseActivity extends ActionBarActivity {
     }
     private ProgressDialog mProgress;
 
+    private LocationManager mLocationManager;
+
+    public double getLong() {
+        return mLong;
+    }
+
+    public void setLong(double mLong) {
+        this.mLong = mLong;
+    }
+
+    public double getLat() {
+        return mLat;
+    }
+
+    public void setLat(double mLat) {
+        this.mLat = mLat;
+    }
+
+    private double mLong = 0;
+    private double mLat = 0;
+
+
     protected enum ItemType{
         EDITTEXT, SPINNER
     }
@@ -39,6 +65,9 @@ public class BaseActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 30 * 1000,
+                0, mLocationListener);
     }
 
     public void showSnackBar(String message){
@@ -123,10 +152,38 @@ public class BaseActivity extends ActionBarActivity {
         return editTextItem;
     }
 
+    protected FormPhotoAlbum createPhotoAlbum() {
+        final FormPhotoAlbum formPhotoAlbum = new FormPhotoAlbum(this);
+        return formPhotoAlbum;
+    }
+
     protected LinearLayout createCommonSub(String title){
         LinearLayout lnCommonSub = (LinearLayout) getLayoutInflater().inflate(R.layout.form_common_sub, null);
         ((TextView)(lnCommonSub.findViewById(R.id.lblSubTitle))).setText(title);
         return lnCommonSub;
     }
+
+    private final LocationListener mLocationListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(final Location location) {
+            mLong = location.getLongitude();
+            mLat = location.getLatitude();
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+
+        }
+    };
 
 }

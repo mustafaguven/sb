@@ -1,6 +1,7 @@
 package com.timboict.saglikbakanligi.component;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -8,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import com.timboict.saglikbakanligi.R;
@@ -68,7 +70,7 @@ public class FormSpinner extends LinearLayout  {
         ddl.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(getOnItemSelected()!=null){
+                if (getOnItemSelected() != null) {
                     getOnItemSelected().onItemSelectedListener(position, parent.getItemAtPosition(position).toString());
                 }
             }
@@ -79,6 +81,23 @@ public class FormSpinner extends LinearLayout  {
             }
         });
     }
+
+    public void setSelectionByString(String txt){
+        ArrayAdapter<String> adapter = (ArrayAdapter<String>) ddl.getAdapter();
+        ddl.setSelection(adapter.getPosition(txt));
+    }
+
+    public void setSelectionByPosition(int position){
+        ddl.setSelection(position);
+    }
+
+    public void setSelectionByPosition(String position){
+        if(TextUtils.isDigitsOnly(position)){
+            setSelectionByPosition(Integer.parseInt(position)+1); //+1 yapıyoruz cunku serverdan "seçiniz" dahil olmadan geliyor, client tarafında seçiniz ekleniyor
+        }
+    }
+
+
 
     public TextView getLbl() {
         return lbl;

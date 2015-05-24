@@ -1,6 +1,7 @@
 package com.timboict.saglikbakanligi.component;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -44,7 +45,8 @@ public class FormEditText extends LinearLayout  {
     }
 
     public void setTxt(String txt) {
-        this.txt.setText(txt);
+        if(!TextUtils.isEmpty(txt))
+            this.txt.setText(txt);
     }
 
     public TextView getLbl() {
