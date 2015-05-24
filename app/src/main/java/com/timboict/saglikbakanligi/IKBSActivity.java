@@ -7,9 +7,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.timboict.saglikbakanligi.cache.cache.SBData;
+import com.timboict.saglikbakanligi.cache.SBData;
 import com.timboict.saglikbakanligi.service.Retrofit;
+import com.timboict.saglikbakanligi.ui.ListeActivity;
 import com.timboict.saglikbakanligi.ui.aritma.AritmaFormActivity;
+import com.timboict.saglikbakanligi.ui.aritma.AritmaListActivity;
 
 import java.util.HashMap;
 
@@ -42,8 +44,8 @@ public class IKBSActivity extends BaseActivity {
         switch (v.getId())
         {
             case R.id.lnAritma:
-                menu.add("Yeni Arıtma Tesisi Girişi");
-                menu.add("Listeden Arıtma Tesisi Sorgulama ve Güncelleme");
+                menu.add(getString(R.string.yeni_aritma_tesisi_girisi));
+                menu.add(getString(R.string.listeden_aritma_tesisi_sorgulama_ve_guncelleme));
                 menu.add("Haritadan Arıtma Tesisi Sorgulama ve Güncelleme");
                 break;
             case R.id.isbsKaynakBilgiLL:
@@ -89,12 +91,17 @@ public class IKBSActivity extends BaseActivity {
     public boolean onContextItemSelected(MenuItem item)
     {
 
-        if(item.getTitle().toString().contentEquals("Yeni Arıtma Tesisi Girişi"))
+        if(item.getTitle().toString().contentEquals(getString(R.string.yeni_aritma_tesisi_girisi)))
         {
             Intent i = new Intent(IKBSActivity.this, AritmaFormActivity.class);
             startActivity(i);
         }
 
+        if(item.getTitle().toString().contentEquals(getString(R.string.listeden_aritma_tesisi_sorgulama_ve_guncelleme)))
+        {
+            Intent i = new Intent(IKBSActivity.this, AritmaListActivity.class);
+            startActivity(i);
+        }
 
         /*if(item.getTitle().toString().contentEquals("Yeni Kaynak Bilgi Girişi"))
         {

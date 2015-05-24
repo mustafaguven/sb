@@ -1,4 +1,4 @@
-package com.timboict.saglikbakanligi.cache.cache;
+package com.timboict.saglikbakanligi.cache;
 
 import android.content.Context;
 import android.content.SharedPreferences;

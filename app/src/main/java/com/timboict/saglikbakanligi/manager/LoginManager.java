@@ -2,7 +2,7 @@ package com.timboict.saglikbakanligi.manager;
 
 import android.content.Context;
 
-import com.timboict.saglikbakanligi.ResponseListener;
+import com.timboict.saglikbakanligi.service.ResponseListener;
 import com.timboict.saglikbakanligi.enums.GirisTipi;
 import com.timboict.saglikbakanligi.model.User;
 import com.timboict.saglikbakanligi.service.Retrofit;
@@ -17,9 +17,8 @@ public class LoginManager extends BaseManager<LoginAPI> {
         super(context);
     }
 
-    public void login (GirisTipi girisTipi, String username, String password, ResponseListener<User> responseListener){
+    public void login (String username, String password, ResponseListener<User> responseListener){
         getBaseActivity().showProgress();
-        setGirisTipi(girisTipi);
         Retrofit.clear(); //sadece login ve logout aninda cagirilir...
         getApi(LoginAPI.class).login(username, password, new Retrofit.RetroCallback<>(responseListener));
     }

@@ -8,4 +8,6 @@
     <string name="icme_suyu_islemleri">İçme Suyu İşlemleri</string>
     <string name="ambalajli_su_islemleri">Ambalajlı Su İşlemleri</string>
     <string name="aritma_form_main_title">ARITMA TESİSİ BİLGİ GİRİŞİ</string>
+    <string name="yeni_aritma_tesisi_girisi">Yeni Arıtma Tesisi Girişi</string>
+    <string name="listeden_aritma_tesisi_sorgulama_ve_guncelleme">Listeden Arıtma Tesisi Sorgulama ve Güncelleme</string>
 </resources>

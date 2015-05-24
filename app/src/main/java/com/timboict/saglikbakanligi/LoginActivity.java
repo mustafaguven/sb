@@ -14,10 +14,12 @@ import android.widget.TextView;
 
 import com.nispok.snackbar.Snackbar;
 import com.nispok.snackbar.enums.SnackbarType;
-import com.timboict.saglikbakanligi.cache.cache.SBData;
+import com.timboict.saglikbakanligi.cache.SBData;
 import com.timboict.saglikbakanligi.enums.GirisTipi;
 import com.timboict.saglikbakanligi.manager.LoginManager;
 import com.timboict.saglikbakanligi.model.User;
+import com.timboict.saglikbakanligi.service.ResponseListener;
+import com.timboict.saglikbakanligi.service.Retrofit;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -67,12 +69,15 @@ public class LoginActivity extends BaseActivity {
     public void onClicked_Login() {
         if (validated()) {
             showProgress();
-            loginManager.login(mGirisTipi, txtUsername.getText().toString(), txtPassword.getText().toString(), new ResponseListener<User>() {
+
+            loginManager.login(txtUsername.getText().toString(), txtPassword.getText().toString(), new ResponseListener<User>() {
                 @Override
                 public void onSuccess(User user) {
+                    Retrofit.clear(); // authenticated builder icin madapter'ın yeniden yaratılması gerekli
                     user.setGirisTipi(mGirisTipi);
                     SBData.setUser(user);
                     startActivity(new Intent(LoginActivity.this, IKBSActivity.class));
+
                 }
 
                 @Override
@@ -115,6 +120,7 @@ public class LoginActivity extends BaseActivity {
             error += "Giriş tipi seçilmedi. ";
         } else {
             mGirisTipi = lblSeciniz.getText().toString().contentEquals(getResources().getString(R.string.icme_suyu_islemleri)) ? GirisTipi.ICME_SUYU_ISLEMLERI : GirisTipi.AMBALAJLI_SU_ISLEMLERI;
+            SBData.setGirisTipi(mGirisTipi);
         }
 
         if (TextUtils.isEmpty(txtUsername.getText().toString())) {

@@ -1,4 +1,4 @@
-package com.timboict.saglikbakanligi;
+package com.timboict.saglikbakanligi.service;
 
 /**
  * Created by mustafaguven on 20.05.2015.

@@ -1,4 +1,4 @@
-package com.timboict.saglikbakanligi.cache.cache;
+package com.timboict.saglikbakanligi.cache;
 
 public enum CacheStatus {
     UPDATED,
