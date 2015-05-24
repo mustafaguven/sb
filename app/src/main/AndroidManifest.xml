@@ -39,21 +39,6 @@
 
 
         <activity
-            android:name=".ASBSActivity"
-            android:label="@string/app_name"></activity>
-
-
-        <activity
-            android:name=".YeniKaynakActivity"
-            android:label="@string/app_name"></activity>
-
-
-        <activity
-            android:name=".YeniKaynakBilgiGirisiFormActivity"
-            android:label="@string/app_name"></activity>
-
-
-        <activity
             android:name=".ui.aritma.AritmaListActivity"
             android:label="@string/app_name"></activity>
 

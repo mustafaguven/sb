@@ -43,6 +43,7 @@ public class FormPhotoAlbum extends GridLayout {
     public Button btnTakePhoto;
 
     private String mFolderName;
+    private GridViewAdapter adapter;
 
     public FormPhotoAlbum(Context context) {
         super(context);
@@ -94,8 +95,13 @@ public class FormPhotoAlbum extends GridLayout {
         return imageItems;
     }
 
-    public void getPhotos(String folderName) {
-        gvPhotoAlbum.setAdapter(new GridViewAdapter(mContext, R.layout.grid_item_layout, getData(folderName)));
+    public void getPhotos(String folderName, boolean isFromUrl) {
+        adapter = new GridViewAdapter(mContext, R.layout.grid_item_layout, getData(folderName), isFromUrl);
+        gvPhotoAlbum.setAdapter(adapter);
+    }
+
+    public void addPhoto() {
+
     }
 
     public void takePhoto(String folderName){

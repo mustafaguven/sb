@@ -58,7 +58,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 startActivity(i2);
                 break;
             case R.id.btnASBS:
-                Intent i3 = new Intent(MainActivity.this, ASBSActivity.class);
+                Intent i3 = new Intent(MainActivity.this, IKBSActivity.class);
                 startActivity(i3);
                 break;
             case R.id.btnSSS:

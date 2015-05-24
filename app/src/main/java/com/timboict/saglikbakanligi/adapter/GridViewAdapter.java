@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.timboict.saglikbakanligi.R;
 import com.timboict.saglikbakanligi.component.ImageItem;
 
@@ -20,13 +21,15 @@ import java.util.ArrayList;
 public class GridViewAdapter extends ArrayAdapter {
     private Context context;
     private int layoutResourceId;
+    private boolean isFromUrl;
     private ArrayList data = new ArrayList();
 
-    public GridViewAdapter(Context context, int layoutResourceId, ArrayList data) {
+    public GridViewAdapter(Context context, int layoutResourceId, ArrayList data, boolean isFromUrl) {
         super(context, layoutResourceId, data);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
         this.data = data;
+        this.isFromUrl = isFromUrl;
     }
 
     @Override
@@ -45,9 +48,21 @@ public class GridViewAdapter extends ArrayAdapter {
             holder = (ViewHolder) row.getTag();
         }
 
-        ImageItem item = (ImageItem) data.get(position);
-        holder.imageTitle.setText(item.getTitle());
-        holder.image.setImageBitmap(item.getImage());
+        if(!isFromUrl) {
+            ImageItem item = (ImageItem) data.get(position);
+            holder.imageTitle.setText(item.getTitle());
+            holder.image.setImageBitmap(item.getImage());
+        } else {
+            String url = (String) data.get(position);
+            holder.imageTitle.setText("Fotoğraf " + (position+1));
+            Picasso.with(context) //
+                    .load(url) //
+                    .placeholder(R.drawable.icn1) //
+                    .error(R.drawable.icn2) //
+                    .fit()
+                    .centerCrop()//
+                    .into(holder.image);
+        }
         return row;
     }
 

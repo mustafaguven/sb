@@ -1,29 +1,21 @@
 package com.timboict.saglikbakanligi.ui.aritma;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.timboict.saglikbakanligi.BaseActivity;
 import com.timboict.saglikbakanligi.R;
 import com.timboict.saglikbakanligi.component.FormEditText;
-import com.timboict.saglikbakanligi.component.FormPhotoAlbum;
 import com.timboict.saglikbakanligi.component.FormSpinner;
 import com.timboict.saglikbakanligi.enums.Extras;
 import com.timboict.saglikbakanligi.manager.DetailManager;
+import com.timboict.saglikbakanligi.manager.SaveManager;
 import com.timboict.saglikbakanligi.model.ISBSAritmaModel;
 import com.timboict.saglikbakanligi.service.ResponseListener;
-import com.timboict.saglikbakanligi.util.FileUtil;
-
-import java.io.InputStream;
-import java.util.HashMap;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -39,9 +31,10 @@ public class AritmaFormActivity extends BaseActivity {
     @InjectView(R.id.lblMainTitle)
     TextView lblMainTitle;
 
-    private final String folderName="ARITMA_TEMP";
+    private String folderName="ARITMA_TEMP";
     private String mId;
     private DetailManager<ISBSAritmaModel> detailManager;
+    private SaveManager<ISBSAritmaModel> saveManager;
 
     LinearLayout lnCografiKonumBilgileri, lnKullanilanKimyasal, lnKlorlamaDurumu;
     FormEditText txtKodu, txtAdi, txtAdresi, txtMevkisi, txtSahibi, txtIsleticisi, txtKapasitesi, txtTelefon, txtEklenmeTarihi,
@@ -50,7 +43,7 @@ public class AritmaFormActivity extends BaseActivity {
     FormSpinner ddlTipi, ddlAluminyumSulfat, ddlDemirKlorur, ddlKirec, ddlKlor, ddlPolielektrolit, ddlSulfirikAsit, ddlKloraminasyon, ddlKlorlamaCihazi;
     Button btnKoordinatGuncelle, btnKaydetDuzenle;
 
-    FormPhotoAlbum formPhotoAlbum;
+    //FormPhotoAlbum formPhotoAlbum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +53,7 @@ public class AritmaFormActivity extends BaseActivity {
 
         lblMainTitle.setText(getString(R.string.aritma_form_main_title));
         detailManager = new DetailManager<>(this);
+        saveManager = new SaveManager<>(this);
 
 
         createForm();
@@ -67,10 +61,17 @@ public class AritmaFormActivity extends BaseActivity {
             if (getIntent().getExtras().getString(Extras.ID) != null) {
                 this.mId = getIntent().getExtras().getString(Extras.ID);
                 setOpenedForUpdate(true);
+                folderName = this.mId;
                 populateForm();
             }
         }
+        //loadPhoto();
     }
+
+ /*   private void loadPhoto() {
+        //önce url'deki ya da bellekteki fotoları yükle
+        formPhotoAlbum.getPhotos(folderName, isOpenedForUpdate());
+    }*/
 
     private void populateForm() {
 
@@ -174,32 +175,48 @@ public class AritmaFormActivity extends BaseActivity {
         ddlKlorlamaCihazi = createSpinnerFormItem("Klorlama Cihazı var mı?");
         lnMainView.addView(ddlKlorlamaCihazi);
 
-        formPhotoAlbum = createPhotoAlbum();
+/*        formPhotoAlbum = createPhotoAlbum();
         formPhotoAlbum.btnTakePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 formPhotoAlbum.takePhoto(folderName);
             }
         });
+        lnMainView.addView(formPhotoAlbum);*/
 
-        lnMainView.addView(formPhotoAlbum);
         btnKaydetDuzenle = new Button(this);
         btnKaydetDuzenle.setText(isOpenedForUpdate() ? "DÜZENLE" : "KAYDET");
+        btnKaydetDuzenle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ISBSAritmaModel model = new ISBSAritmaModel();
+                model.setAdi("TEST");
+
+                saveManager.saveAritma("aritma", model, new ResponseListener<ISBSAritmaModel>() {
+                    @Override
+                    public void onSuccess(ISBSAritmaModel isbsAritmaModel) {
+                        int a = 0;
+                    }
+
+                    @Override
+                    public void onFailure(Exception e) {
+                        int b = 0;
+                    }
+                });
+            }
+        });
         lnMainView.addView(btnKaydetDuzenle);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        formPhotoAlbum.getPhotos(folderName);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 1 && resultCode == RESULT_OK) {
-            formPhotoAlbum.getPhotos(folderName);
-        }
+        //fotoları güncelle
     }
 }

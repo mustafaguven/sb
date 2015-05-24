@@ -1,6 +1,7 @@
 package com.timboict.saglikbakanligi;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
@@ -185,5 +186,8 @@ public class BaseActivity extends ActionBarActivity {
 
         }
     };
+
+
+
 
 }
